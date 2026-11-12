@@ -1,0 +1,162 @@
+export const PRODUCTS = [
+  {
+    id: "artisanal-assortment-12",
+    title: "Artisanal Assortment Tasting Box (12 Cups)",
+    category: "gifting",
+    categories: ["all", "espresso", "flat-white", "cacao-rim", "gifting"],
+    badge: "Atelier Signature",
+    badgeType: "gold",
+    rating: 4.9,
+    reviewCount: 128,
+    capacity: "12 Mixed Cups • 60ml & 150ml",
+    heatResistance: "85°C for 45 Mins",
+    sustainability: "Zero Waste • 100% Edible",
+    shortDesc: "Our flagship curated collection uniting all four master recipes: Belgian Dark, Salted Caramel, Ruby Raspberry, and Espresso Roast in an artisanal gift box.",
+    longDesc: "Handcrafted in small batches using stone-milled whole grains and glazed with tempered Belgian cocoa. Engineered to withstand boiling espresso at 85°C for up to 45 minutes without leaking or compromising its crispy biscuit snap.",
+    tastingNotes: ["Belgian Dark 70%", "Salted Caramel Flakes", "Ruby Raspberry", "Arabica Espresso Crunch"],
+    pairing: "Versatile pairing across light pour-overs, cortados, double espressos, and affogato desserts.",
+    packs: [
+      { size: "12 Cups", count: 12, price: 1299, originalPrice: 1499, isDefault: true },
+      { size: "24 Cups", count: 24, price: 2399, originalPrice: 2799, isDefault: false },
+      { size: "48 Cups", count: 48, price: 4499, originalPrice: 5199, isDefault: false }
+    ],
+    defaultPrice: 1299,
+    defaultOriginalPrice: 1499,
+    image: "https://lh3.googleusercontent.com/aida/ALJJyrBP03O-v_zU-1gwJJ-NzaQYTGY-FF9BUOVEQw8VrYYGx0-u-NikO7yBni0dGsLJ2jIV-PKTDUXwuG8mRr6sAsn6tIwrx1nfgFY65nkz9_ujeIVGXDc742WqGEeJTAA1pQvjilocpetq3al-G0jpfbpHgdAkwyiVshgWjlIvGWyviWEU337CuIZULzbFTv-TPTLlq5ZUA8ppPXm7K4EEIDkbrN7ekdxYwFmZwj2-w1s",
+    imageAlt: "Artisanal Assortment Tasting Box with 12 handcrafted cookie cups in natural kraft box"
+  },
+  {
+    id: "signature-belgian-dark-6",
+    title: "Signature Belgian Dark Chocolate (6 Cups)",
+    category: "espresso",
+    categories: ["all", "espresso", "cacao-rim"],
+    badge: "Best Seller",
+    badgeType: "olive",
+    rating: 4.95,
+    reviewCount: 242,
+    capacity: "60ml Espresso Cup",
+    heatResistance: "85°C for 45 Mins",
+    sustainability: "70% Single-Origin Cocoa",
+    shortDesc: "Our most acclaimed vessel. Rich 70% single-origin Belgian chocolate lining insulated within an oven-baked whole wheat biscuit rim.",
+    longDesc: "As your hot espresso sits in this artisanal vessel, the inner cocoa layer gradually softens, slowly releasing subtle nutty cacao undertones into your crema without disintegrating the cup.",
+    tastingNotes: ["Ecuador Single-Origin Cacao", "Toasted Wheat", "Golden Crust Crunch", "Brown Sugar"],
+    pairing: "Perfect partner for Ethiopian Yirgacheffe, rich South Indian Peaberry, or an intense double ristretto.",
+    packs: [
+      { size: "6 Cups", count: 6, price: 749, originalPrice: 849, isDefault: true },
+      { size: "12 Cups", count: 12, price: 1399, originalPrice: 1599, isDefault: false }
+    ],
+    defaultPrice: 749,
+    defaultOriginalPrice: 849,
+    image: "https://lh3.googleusercontent.com/aida/ALJJyrBBaiGCNdoYlBN9b8N7v95Dlik2SK4-NwApHTbOYMXHXRqDLJBPjsn9sMDgLKbuIqwm5vqH90f5vZDt7cWiQPdBtxB84deyL3qRrSiP465yyMGN78Rxomox9CbWAUSmtE0KAczqhLrp5VtR8L7E3ofX4BFo4mYFhB1TMJxbxsI4hYtuS9j8I9QDC8PH8MuUOLNWe_3rBRnS0HkDAJ1ILYjATiudujYm5zT7iJOLGKXv",
+    imageAlt: "Three Belgian dark chocolate lined cookie cups holding steaming hot fresh coffee on slate stone"
+  },
+  {
+    id: "salted-caramel-crisp-6",
+    title: "Salted Caramel Crisp Cups (6 Cups)",
+    category: "flat-white",
+    categories: ["all", "flat-white", "vanilla-oat"],
+    badge: "Connoisseur's Choice",
+    badgeType: "gold",
+    rating: 4.88,
+    reviewCount: 96,
+    capacity: "150ml Flat White / Cortado",
+    heatResistance: "85°C for 40 Mins",
+    sustainability: "Himalayan Pink Salt",
+    shortDesc: "Generously sized vessel with hand-glazed artisanal caramel and flaky pink salt crystals over a toasted rolled oat base.",
+    longDesc: "Designed for larger espresso pours like flat whites, cappuccinos, or hot spiced chai. The caramel glaze melts softly into the milk froth, creating a luscious naturally sweetened finish.",
+    tastingNotes: ["Amber Caramel Glaze", "Toasted Rolled Oats", "Himalayan Pink Salt", "Roasted Hazelnut"],
+    pairing: "Flavors sing beside a silky Flat White, Oat Milk Cortado, or spiced Masala Chai.",
+    packs: [
+      { size: "6 Cups", count: 6, price: 799, originalPrice: 899, isDefault: true },
+      { size: "12 Cups", count: 12, price: 1499, originalPrice: 1699, isDefault: false }
+    ],
+    defaultPrice: 799,
+    defaultOriginalPrice: 899,
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAZe-uTep-jVr5cFmb-znzdY9yMG-70RAofIotBLK8dC-0YzxZslScWDC5uAkp7Piyt8Li61_8Oj6ZB9ePhPAxQNIGXSMJ4xTzypXok4Ym5awPJrQaWyjOxoEYC9IJx1Tvph_62jh-H0LMjDbKKoMRpfTGsNty67niD07GGTyN6rOBJ1OguDX3G1vIXmh8YAKIDjV1kBrr2VHJ6PlJWbudfmaVNBfTemlf7TWszhaE",
+    imageAlt: "Artisanal edible cookie cups coated with shimmering amber salted caramel glaze and topped with crushed toasted hazelnuts on a rustic linen background"
+  },
+  {
+    id: "ruby-raspberry-velvet-6",
+    title: "Ruby Raspberry Velvet Cups (6 Cups)",
+    category: "cacao-rim",
+    categories: ["all", "espresso", "cacao-rim"],
+    badge: "Limited Batch",
+    badgeType: "red",
+    rating: 4.92,
+    reviewCount: 84,
+    capacity: "60ml Espresso Cup",
+    heatResistance: "85°C for 45 Mins",
+    sustainability: "Freeze-Dried Raspberry",
+    shortDesc: "Vibrant ruby cacao lining infused with freeze-dried tart organic raspberries, crowned with delicate berry dust.",
+    longDesc: "A sensory celebration pairing the berry sweetness and tart acidity of ruby chocolate with rich dark coffee. Baked with Madagascar vanilla pod infused pastry dough.",
+    tastingNotes: ["Tart Wild Raspberry", "Ruby Cocoa Butter", "Tahitian Vanilla", "Crisp Waffle Snap"],
+    pairing: "Sublime with bright medium roasts, iced cold brew shots, or velvety macchiatos.",
+    packs: [
+      { size: "6 Cups", count: 6, price: 849, originalPrice: 949, isDefault: true },
+      { size: "12 Cups", count: 12, price: 1599, originalPrice: 1799, isDefault: false }
+    ],
+    defaultPrice: 849,
+    defaultOriginalPrice: 949,
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAjPzX_rZ8VLDoPHAszX60TinAwyv3tRfr53alXYUS8qKohwH0txKJIgmIdB22cx7KzlziWXX_-g0ShlKdyjR4PZ1zun-0DlFK1wdJg_V3bbVoblXNde7V3mC32IIUmDRSnt7d8RaIm-r5liFS6LywCC1MBL3AxRM4a215LuFADEYeo_HoU40nhMnpf1ft8CWVlfSdE56sd7e9vZ7GyQvk-bEkYDjIuqFuIJ1Jiu4U",
+    imageAlt: "Deep ruby pink edible waffle cookie cups with natural raspberry cocoa lining filled with rich crema espresso topped with freeze dried raspberry dust"
+  },
+  {
+    id: "espresso-roast-mini-6",
+    title: "Espresso Roast Mini Cookie Cups (6 Minis)",
+    category: "espresso",
+    categories: ["all", "espresso"],
+    badge: "Pure Ristretto",
+    badgeType: "olive",
+    rating: 4.85,
+    reviewCount: 112,
+    capacity: "50ml Ristretto & Macchiato",
+    heatResistance: "85°C for 50 Mins",
+    sustainability: "Infused with Arabica Beans",
+    shortDesc: "Petite espresso cups crafted with crushed Arabica coffee beans folded straight into the biscuit dough, lined with dark ganache.",
+    longDesc: "A double hit of coffee essence! The cup itself carries roasted coffee bean nuances, baked dense and crispy to hold single ristretto pulls up to 50 minutes without melting.",
+    tastingNotes: ["Roasted Arabica Crumbs", "80% Dark Ganache", "Toasted Malt", "Smoked Toffee"],
+    pairing: "Ideal for short ristrettos, double shots, and traditional espresso tasting flights.",
+    packs: [
+      { size: "6 Minis", count: 6, price: 699, originalPrice: 799, isDefault: true },
+      { size: "12 Minis", count: 12, price: 1299, originalPrice: 1499, isDefault: false }
+    ],
+    defaultPrice: 699,
+    defaultOriginalPrice: 799,
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBlLEzwoi7h-dqrK_a2_x4ftEwsjrjJIc0wOyu2y9eBPAecjZELr4_I7I8TEyzxihuT3sw5IvRxOd8yTXh1b2PhfNkInLq2mGn6UVqWwlTGfnKcpXzBHCSmF2a1Szqrccrgbrvw5iZtNorXYlHnXUT0_gGRUVzljefU0erAwhWXDNaTiEMie_dJq7p1n3NG5sE05fFWW47DsEQpqlQMmEU2woBMiCthvzNPzPxCk3I",
+    imageAlt: "Petite artisanal edible espresso cups 50ml size filled with deep dark crema ristretto coffee served beside coffee beans on warm ceramic tray"
+  },
+  {
+    id: "hazelnut-praline-lined-6",
+    title: "Hazelnut Praline Lined Cups (6 Cups)",
+    category: "vanilla-oat",
+    categories: ["all", "flat-white", "vanilla-oat", "cacao-rim"],
+    badge: "Artisanal Reserve",
+    badgeType: "gold",
+    rating: 4.97,
+    reviewCount: 178,
+    capacity: "150ml Cappuccino / Latte",
+    heatResistance: "85°C for 40 Mins",
+    sustainability: "Roasted Piedmont Hazelnuts",
+    shortDesc: "Rich Piedmontese hazelnut praline spread blended with creamy milk chocolate coating, topped with crunchy toasted nut nibs.",
+    longDesc: "A decadent pastry treat that transforms your morning cappuccino into a European patisserie experience. The rim is encrusted with roasted hazelnuts that crunch delightfully with every sip.",
+    tastingNotes: ["Roasted Piedmont Hazelnut", "Creamy Praline Ganache", "Golden Butter Biscuit", "Warm Cocoa"],
+    pairing: "Elevates Oat Milk Lattes, velvety Cappuccinos, and hot Mochas.",
+    packs: [
+      { size: "6 Cups", count: 6, price: 829, originalPrice: 929, isDefault: true },
+      { size: "12 Cups", count: 12, price: 1549, originalPrice: 1749, isDefault: false }
+    ],
+    defaultPrice: 829,
+    defaultOriginalPrice: 929,
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD2nM9JGI6-LIP4sKezGwDBQCDd7FHFLxzwqb7JoM_KLw6iA3x6GGdCPg27rLrDYDOeW_zLWT0rhwVw0kk80y7W58vOodVIVxITYkWR9_KUwn8AIWYDTGcgp2R2FtCS_eyR5CMDi7LzFkthCYaQJbgRNvglz7ilusEvPATpnuWGW_hXfteMsxy-3_2ttRXQv51cdv0DTt2NJxoa0UryybRdLruZBaDHTCl_tNBPohI",
+    imageAlt: "Artisanal edible cookie cups garnished with roasted piedmont hazelnuts and creamy nut spread rim on stone tableware in bright morning light"
+  }
+];
+
+export const CATEGORIES = [
+  { id: "all", label: "All Tasting Vessels", icon: "coffee" },
+  { id: "espresso", label: "Espresso 60ml", icon: "flame" },
+  { id: "flat-white", label: "Flat White 150ml", icon: "cup-soda" },
+  { id: "cacao-rim", label: "Dark Cacao Rim", icon: "sparkles" },
+  { id: "vanilla-oat", label: "Toasted Vanilla Oat", icon: "wheat" },
+  { id: "gifting", label: "Gifting Collections", icon: "gift" }
+];
