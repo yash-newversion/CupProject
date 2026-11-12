@@ -81,21 +81,39 @@ export default function AdminPage({
     return () => clearInterval(interval);
   }, []);
 
-  const handleAdvanceOrderStatus = async (orderId, currentStatus) => {
-    let nextStatus = 'Delivered & Savored';
-    let nextStatusCode = 'delivered';
+  const handleAdvanceOrderStatus = async (orderId, currentStatus, currentStatusCode) => {
+    const now = new Date().toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: true });
 
-    if (currentStatus === 'Baking in Atelier') {
+    let nextStatus = '';
+    let nextStatusCode = '';
+    let updatedSteps = null;
+
+    const isProcessing = currentStatusCode === 'processing' || currentStatusCode === 'baking' || currentStatus === 'Baking in Atelier';
+    const isInTransit = currentStatusCode === 'in_transit' || currentStatus === 'BlueDart Temperature-Monitored Transit';
+
+    if (isProcessing) {
       nextStatus = 'BlueDart Temperature-Monitored Transit';
       nextStatusCode = 'in_transit';
-    } else if (currentStatus === 'BlueDart Temperature-Monitored Transit') {
+      updatedSteps = [
+        { step: 1, label: 'Order Placed & Secured', desc: 'Payment confirmed. Baking, glazing & nitrogen sealing completed at Atelier.', time: '', status: 'completed' },
+        { step: 2, label: 'Dispatched via BlueDart', desc: `Handed over to BlueDart Express Air at ${now}. Temperature-monitored climate-controlled transit from Bengaluru Atelier Hub.`, time: now, status: 'active' },
+        { step: 3, label: 'Delivered & Ready to Savor', desc: 'Contactless doorstep delivery with tasting instruction booklet.', time: 'Est. Tomorrow, By 2:00 PM', status: 'pending' },
+      ];
+    } else if (isInTransit) {
       nextStatus = 'Delivered & Savored';
       nextStatusCode = 'delivered';
+      updatedSteps = [
+        { step: 1, label: 'Order Placed & Secured', desc: 'Payment confirmed. Baking, glazing & nitrogen sealing completed at Atelier.', time: '', status: 'completed' },
+        { step: 2, label: 'Dispatched via BlueDart', desc: 'Dispatched via BlueDart Express Air temperature-monitored transit.', time: '', status: 'completed' },
+        { step: 3, label: 'Delivered & Ready to Savor', desc: `Your order was delivered on ${now}. Enjoy your artisanal Cup2Eat experience! 🎉`, time: now, status: 'completed' },
+      ];
+    } else {
+      return;
     }
 
-    onUpdateOrderStatus(orderId, nextStatus, nextStatusCode);
+    onUpdateOrderStatus(orderId, nextStatus, nextStatusCode, updatedSteps);
     await api.updateOrderStatus(orderId, nextStatus, nextStatusCode);
-    onShowToast?.(`Order #${orderId} advanced to "${nextStatus}"`);
+    onShowToast?.(`✅ Order #${orderId} → "${nextStatus}"`);
     refreshAdminData();
   };
 
@@ -671,7 +689,7 @@ export default function AdminPage({
                       <div className="flex items-center gap-2">
                         {isProcessing && (
                           <button
-                            onClick={() => handleAdvanceOrderStatus(ord.orderId, ord.status)}
+                            onClick={() => handleAdvanceOrderStatus(ord.orderId, ord.status, ord.statusCode)}
                             className="bg-primary hover:bg-[#344218] text-white px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-sm"
                           >
                             <Package className="w-3.5 h-3.5" />
@@ -681,7 +699,7 @@ export default function AdminPage({
 
                         {isInTransit && (
                           <button
-                            onClick={() => handleAdvanceOrderStatus(ord.orderId, ord.status)}
+                            onClick={() => handleAdvanceOrderStatus(ord.orderId, ord.status, ord.statusCode)}
                             className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-sm"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />

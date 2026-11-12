@@ -100,12 +100,9 @@ export const INITIAL_ORDERS = [
       pincode: "560038"
     },
     steps: [
-      { step: 1, label: "1. Order Placed & Secured", desc: "Payment confirmed via Razorpay. Batch assigned to Atelier oven queue #04.", time: "12 Nov, 10:15 AM", status: "completed" },
-      { step: 2, label: "2. Recipe Formulated & Inspected", desc: "Ancient oat grain blend measured and stone-milled to precise micron gauge.", time: "12 Nov, 11:30 AM", status: "completed" },
-      { step: 3, label: "3. Fresh Baking & Cocoa Glaze", desc: "Currently baking at 175°C. Hot vessels will receive tempered Belgian 70% dark chocolate inner lining.", time: "12 Nov, 02:45 PM", status: "active" },
-      { step: 4, label: "4. Nitrogen Air-Seal & Courier Handover", desc: "Individual nitrogen flush foil sealing for guaranteed 6-month artisanal crunchiness.", time: "Est. 12 Nov, 06:00 PM", status: "pending" },
-      { step: 5, label: "5. BlueDart Temperature-Monitored Transit", desc: "Dispatched from Bengaluru Atelier Hub via climate-controlled air transit.", time: "Est. 13 Nov, 08:30 AM", status: "pending" },
-      { step: 6, label: "6. Delivered & Ready to Savor", desc: "Contactless doorstep delivery to Indiranagar address with tasting instruction booklet.", time: "Est. 14 Nov, By 2:00 PM", status: "pending" }
+      { step: 1, label: "Order Placed & Secured", desc: "Payment confirmed. Your order is queued at our Bengaluru Atelier — fresh baking, cocoa glazing & nitrogen sealing in progress.", time: "12 Nov, 10:15 AM", status: "active" },
+      { step: 2, label: "Dispatched via BlueDart", desc: "Handed over to BlueDart Express Air. Temperature-monitored climate-controlled transit from Bengaluru Atelier Hub.", time: "Est. 12 Nov, 06:00 PM", status: "pending" },
+      { step: 3, label: "Delivered & Ready to Savor", desc: "Contactless doorstep delivery with tasting instruction booklet.", time: "Est. 14 Nov, By 2:00 PM", status: "pending" }
     ]
   },
   {

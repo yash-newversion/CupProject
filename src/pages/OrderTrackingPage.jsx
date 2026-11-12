@@ -144,15 +144,11 @@ export default function OrderTrackingPage({ order, onShowToast, onExploreCatalog
                           <div className="inline-flex items-center gap-1.5 mt-2 px-2.5 py-0.5 rounded-full bg-[#FAF6EC] border border-[#E5DFCA] text-[11px] text-[#684600] font-semibold">
                             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
                             <span>
-                              {step.step <= 2
-                                ? 'Processing your order…'
-                                : step.step === 3
-                                ? `Currently baking at Atelier — Batch #${currentOrder.orderId?.slice(-3) || '04'}`
-                                : step.step === 4
-                                ? 'Sealing & dispatch in progress…'
-                                : step.step === 5
-                                ? 'In transit — BlueDart temperature-monitored'
-                                : 'Out for delivery'}
+                              {step.step === 1
+                                ? 'Baking & glazing at Atelier — your cup is being crafted now!'
+                                : step.step === 2
+                                ? `In transit — BlueDart temperature-monitored delivery`
+                                : 'Out for doorstep delivery'}
                             </span>
                           </div>
                         )}

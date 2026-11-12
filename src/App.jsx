@@ -328,13 +328,16 @@ export default function App() {
 
   // Checkout flow
   const handleCheckout = async (checkoutData) => {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
     const orderPayload = {
       userId: user?._id || 'usr-guest',
       customerName: user?.name || 'Aarav Sharma',
       customerEmail: user?.email || 'aarav@connoisseur.in',
       items: checkoutData.items,
       totalAmount: checkoutData.total,
-      deliveryAddress: user?.addresses?.[0] || {
+      deliveryAddress: checkoutData.deliveryAddress || user?.addresses?.[0] || {
         recipient: user?.name || 'Aarav Sharma',
         street: 'Villa 14, The Palms Sanctuary, 100 Ft Road',
         locality: 'Indiranagar',
@@ -360,18 +363,22 @@ export default function App() {
         orderId: `C2E-${randomSuffix}`,
         customerName: orderPayload.customerName,
         customerEmail: orderPayload.customerEmail,
-        date: 'Just Now',
+        date: dateStr,
         status: 'Baking in Atelier',
         statusCode: 'processing',
         trackingId: `BD-${Math.floor(10000000 + Math.random() * 90000000)}`,
         courier: 'BlueDart Express Air',
-        estimatedDelivery: 'Saturday, 16 Nov • By 2:00 PM',
+        estimatedDelivery: 'Within 2–3 Business Days',
         totalAmount: checkoutData.total,
         itemsSummary: checkoutData.items.map((i) => `${i.title} (${i.variant})`).join(' + '),
         items: checkoutData.items,
         deliveryAddress: orderPayload.deliveryAddress,
         pricing: orderPayload.pricing,
-        steps: INITIAL_ORDERS[0].steps.map((s) => ({ ...s }))
+        steps: [
+          { step: 1, label: 'Order Placed & Secured', desc: 'Payment confirmed. Your order is queued at our Bengaluru Atelier — fresh baking, cocoa glazing & nitrogen sealing in progress.', time: now.toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: true }), status: 'active' },
+          { step: 2, label: 'Dispatched via BlueDart', desc: 'Handed over to BlueDart Express Air. Temperature-monitored climate-controlled transit from Bengaluru Atelier Hub.', time: 'Est. Today, 06:00 PM', status: 'pending' },
+          { step: 3, label: 'Delivered & Ready to Savor', desc: 'Contactless doorstep delivery with tasting instruction booklet.', time: 'Est. in 2–3 days', status: 'pending' },
+        ]
       };
     }
 
@@ -380,18 +387,97 @@ export default function App() {
     setActiveTab('tracking');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
+    // ── Send invoice email to customer ────────────────────────────────
+    sendOrderInvoiceEmail(createdOrder);
+
     showToast(
-      `🎉 Tasting Order #${createdOrder.orderId} placed! Savor the anticipation.`,
+      `🎉 Order #${createdOrder.orderId} placed! Invoice sent to ${createdOrder.customerEmail}`,
       'Track Order',
       () => setActiveTab('tracking')
     );
   };
 
-  const handleUpdateOrderStatus = (orderId, newStatus, newStatusCode) => {
+  // Build a plain-text invoice and open mailto: so the customer's mail app sends it
+  const sendOrderInvoiceEmail = (order) => {
+    try {
+      const addr = order.deliveryAddress;
+      const addressStr = addr
+        ? `${addr.recipient || ''}, ${addr.street || ''}, ${addr.locality || ''}, ${addr.city || ''} - ${addr.pincode || ''}`
+        : 'As provided during checkout';
+
+      const itemLines = (order.items || [])
+        .map(i => `  • ${i.title} (${i.variant}) × ${i.quantity || 1}  —  ₹${((i.price || 0) * (i.quantity || 1)).toLocaleString('en-IN')}`)
+        .join('\n');
+
+      const p = order.pricing || {};
+      const subject = encodeURIComponent(`Cup2Eat Order Confirmed — #${order.orderId} 🍫☕`);
+      const body = encodeURIComponent(
+`Dear ${order.customerName},
+
+Thank you for your order at Cup2Eat Atelier! Your artisanal edible cups are now being freshly baked just for you.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TAX INVOICE — CUP2EAT ATELIER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Order ID     : #${order.orderId}
+Date         : ${order.date || new Date().toLocaleDateString('en-IN')}
+Tracking AWB : ${order.trackingId || 'Assigned on dispatch'}
+Courier      : ${order.courier || 'BlueDart Express Air'}
+Est. Delivery: ${order.estimatedDelivery || 'Within 2–3 business days'}
+
+ITEMS ORDERED
+─────────────────────────────────
+${itemLines}
+
+PRICING SUMMARY
+─────────────────────────────────
+Subtotal      : ₹${(p.subtotal || order.totalAmount || 0).toLocaleString('en-IN')}
+Discount      : -₹${(p.discount || 0).toLocaleString('en-IN')}
+Shipping      : ${p.shipping ? '₹' + p.shipping.toLocaleString('en-IN') : 'FREE'}
+─────────────────────────────────
+TOTAL PAID    : ₹${(p.total || order.totalAmount || 0).toLocaleString('en-IN')}
+
+DELIVERY ADDRESS
+─────────────────────────────────
+${addressStr}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You can track your order live at:
+https://cup2eat.in/track
+
+Questions? Reach our concierge:
+Email: concierge@cup2eat.in
+Phone: +91 80 2994 8201 (Mon–Sat, 9AM–7PM)
+
+With artisanal love,
+The Cup2Eat Atelier Team 🌿`
+      );
+
+      const mailto = `mailto:${order.customerEmail}?subject=${subject}&body=${body}`;
+      // Open silently in background tab; most mail clients handle this
+      const a = document.createElement('a');
+      a.href = mailto;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => document.body.removeChild(a), 500);
+    } catch (err) {
+      console.warn('Invoice email error:', err);
+    }
+  };
+
+  const handleUpdateOrderStatus = (orderId, newStatus, newStatusCode, updatedSteps) => {
     setOrders((prev) =>
-      prev.map((o) =>
-        o.orderId === orderId ? { ...o, status: newStatus, statusCode: newStatusCode } : o
-      )
+      prev.map((o) => {
+        if (o.orderId !== orderId) return o;
+        return {
+          ...o,
+          status: newStatus,
+          statusCode: newStatusCode,
+          ...(updatedSteps ? { steps: updatedSteps } : {})
+        };
+      })
     );
   };
 
