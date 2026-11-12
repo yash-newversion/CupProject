@@ -1229,25 +1229,84 @@ export default function AdminPage({
                     </div>
                   </div>
 
-                  {/* Row 3: Image URL + Alt */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold text-on-surface-variant mb-1">Image URL</label>
-                      <input
-                        type="url"
-                        value={editingProduct.image}
-                        onChange={e => setEditingProduct(prev => ({ ...prev, image: e.target.value }))}
-                        placeholder="https://…"
-                        className="w-full border border-[#DFD8BF] bg-[#FAF6EC] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-primary"
-                      />
+                  {/* Row 3: Product Photo — Upload or URL */}
+                  <div>
+                    <label className="block text-xs font-bold text-on-surface-variant mb-2">Product Photo</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {/* Upload from device */}
+                      <div>
+                        <label className="block text-[10px] text-on-surface-variant mb-1 font-semibold uppercase tracking-wide">Upload from Device</label>
+                        <label className="flex flex-col items-center justify-center gap-2 cursor-pointer border-2 border-dashed border-[#C8C2AA] hover:border-primary bg-[#FAF6EC] hover:bg-[#F2EDDF] rounded-xl px-4 py-5 transition-colors group">
+                          <ImageIcon className="w-6 h-6 text-[#C8C2AA] group-hover:text-primary transition-colors" />
+                          <span className="text-[10px] text-on-surface-variant group-hover:text-primary font-semibold">Click to choose photo</span>
+                          <span className="text-[9px] text-on-surface-variant/60">JPG, PNG, WebP — max 5 MB</span>
+                          <input
+                            type="file"
+                            accept="image/jpeg,image/png,image/webp,image/gif"
+                            className="hidden"
+                            onChange={e => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+                              if (file.size > 5 * 1024 * 1024) {
+                                setProductFormError('Image must be under 5 MB');
+                                return;
+                              }
+                              const reader = new FileReader();
+                              reader.onload = ev => setEditingProduct(prev => ({
+                                ...prev,
+                                image: ev.target.result,
+                                imageAlt: prev.imageAlt || file.name.replace(/\.[^.]+$/, ''),
+                              }));
+                              reader.readAsDataURL(file);
+                            }}
+                          />
+                        </label>
+                      </div>
+
+                      {/* URL or Preview */}
+                      <div className="flex flex-col gap-2">
+                        <div>
+                          <label className="block text-[10px] text-on-surface-variant mb-1 font-semibold uppercase tracking-wide">Or paste image URL</label>
+                          <input
+                            type="url"
+                            value={editingProduct.image?.startsWith('data:') ? '' : editingProduct.image}
+                            onChange={e => setEditingProduct(prev => ({ ...prev, image: e.target.value }))}
+                            placeholder="https://…"
+                            className="w-full border border-[#DFD8BF] bg-[#FAF6EC] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-primary"
+                          />
+                        </div>
+                        {/* Live preview */}
+                        {editingProduct.image ? (
+                          <div className="relative">
+                            <img
+                              src={editingProduct.image}
+                              alt="Preview"
+                              className="w-full h-28 object-cover rounded-xl border border-[#DFD8BF]"
+                              onError={e => { e.target.style.display = 'none'; }}
+                            />
+                            <button
+                              onClick={() => setEditingProduct(prev => ({ ...prev, image: '', imageAlt: '' }))}
+                              className="absolute top-1.5 right-1.5 bg-white/90 hover:bg-white rounded-full p-1 shadow text-on-surface-variant hover:text-red-600 transition-colors"
+                              title="Remove photo"
+                            >
+                              <X className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="w-full h-28 rounded-xl border border-dashed border-[#DFD8BF] bg-[#FAF6EC] flex items-center justify-center">
+                            <span className="text-[10px] text-on-surface-variant/60">Preview will appear here</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-xs font-bold text-on-surface-variant mb-1">Image Alt Text</label>
+                    {/* Alt text */}
+                    <div className="mt-2">
+                      <label className="block text-[10px] text-on-surface-variant mb-1 font-semibold uppercase tracking-wide">Image Alt Text</label>
                       <input
                         type="text"
                         value={editingProduct.imageAlt}
                         onChange={e => setEditingProduct(prev => ({ ...prev, imageAlt: e.target.value }))}
-                        placeholder="Descriptive alt text"
+                        placeholder="Descriptive alt text for accessibility"
                         className="w-full border border-[#DFD8BF] bg-[#FAF6EC] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-primary"
                       />
                     </div>
