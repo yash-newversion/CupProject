@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldCheck, Tag, Gift } from 'lucide-react';
+import CheckoutModal from './CheckoutModal';
 
 export default function CartDrawer({
   isOpen,
@@ -8,12 +9,14 @@ export default function CartDrawer({
   updateQuantity,
   removeFromItem,
   onCheckout,
-  onExploreCatalogue
+  onExploreCatalogue,
+  user
 }) {
   const [promoCode, setPromoCode] = useState('');
   const [appliedPromo, setAppliedPromo] = useState(null);
   const [promoError, setPromoError] = useState('');
   const [giftWrap, setGiftWrap] = useState(false);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
   if (!isOpen) return null;
 
@@ -47,20 +50,31 @@ export default function CartDrawer({
   };
 
   const handleCheckoutClick = () => {
-    onCheckout({
-      items: cart,
-      subtotal,
-      discount,
-      shipping: shippingFee,
-      giftWrap: giftWrapFee,
-      total: grandTotal,
-      promoCode: appliedPromo?.code
-    });
     onClose();
+    setShowCheckoutModal(true);
+  };
+
+  const handlePlaceOrder = async (checkoutData) => {
+    await onCheckout(checkoutData);
+    setShowCheckoutModal(false);
+    setAppliedPromo(null);
+    setGiftWrap(false);
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
+    <>
+      {/* Checkout Modal */}
+      <CheckoutModal
+        isOpen={showCheckoutModal}
+        onClose={() => setShowCheckoutModal(false)}
+        cart={cart}
+        pricing={{ subtotal, discount, shipping: shippingFee, giftWrap: giftWrapFee, total: grandTotal }}
+        user={user}
+        onPlaceOrder={handlePlaceOrder}
+      />
+
+      {!isOpen ? null : (
+      <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
       <div
         onClick={onClose}
@@ -306,7 +320,7 @@ export default function CartDrawer({
                 onClick={handleCheckoutClick}
                 className="w-full bg-primary hover:bg-[#344218] text-white py-3 rounded-full text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg active:scale-[0.99]"
               >
-                <span>Proceed to Tasting Checkout</span>
+                <span>Proceed to Secure Checkout</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
@@ -319,5 +333,7 @@ export default function CartDrawer({
         </div>
       </div>
     </div>
+      )}
+    </>
   );
 }

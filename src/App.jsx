@@ -557,6 +557,7 @@ export default function App() {
           setIsCartOpen(false);
           setActiveTab('catalogue');
         }}
+        user={user}
       />
 
       {/* Quick View Modal */}
